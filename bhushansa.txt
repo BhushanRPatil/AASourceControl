@@ -1,0 +1,71 @@
+bhushansa
++ytLBe+wm1GM783xekvkLTi2CNIqdCxBcTmVV0TOZN5Cj4snIqhlnhrdQxpT6s+PpRjM7oIFnT0qkQUIPkDdDg==
+DefaultEndpointsProtocol=https;AccountName=bhushansa;AccountKey=+ytLBe+wm1GM783xekvkLTi2CNIqdCxBcTmVV0TOZN5Cj4snIqhlnhrdQxpT6s+PpRjM7oIFnT0qkQUIPkDdDg==;EndpointSuffix=core.windows.net
+
+jdpR26Y3l/KGxQh31HCOnqS7wM0uITzDM9k2WL/X97ggXFL8OfODmlS+WDwGKxllwe4SPG9PRY0PoKp7G3Mqlw==
+DefaultEndpointsProtocol=https;AccountName=bhushansa;AccountKey=jdpR26Y3l/KGxQh31HCOnqS7wM0uITzDM9k2WL/X97ggXFL8OfODmlS+WDwGKxllwe4SPG9PRY0PoKp7G3Mqlw==;EndpointSuffix=core.windows.net
+
+
+{"code":"DeploymentFailed","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.","details":[{"code":"VMExtensionProvisioningError","message":"VM has reported a failure when processing extension 'Microsoft.Powershell.DSC'. Error message: \"DSC Configuration 'RegistrationMetaConfigV2' completed with error(s). Following are the first few: PowerShell DSC resource DSC_xRemoteFile failed to execute Set-TargetResource functionality with error message: Invoking web request failed with error. The remote server returned an error: (403) Forbidden. The SendConfigurationApply function did not succeed.\"\r\n\r\nMore information on troubleshooting is available at https://aka.ms/VMExtensionDSCWindowsTroubleshoot "}]}
+
+
+param(    
+    [Parameter(Mandatory = $false)] 
+    [String] $ResourceGroupName
+)
+$connectionName = "AzureRunAsConnection"
+$SubId = Get-AutomationVariable -Name 'AzureSubscriptionId'
+try {
+    # Get the connection "AzureRunAsConnection "
+    $servicePrincipalConnection = Get-AutomationConnection -Name $connectionName         
+
+    "Logging in to Azure..."
+    Add-AzureRmAccount `
+        -ServicePrincipal `
+        -TenantId $servicePrincipalConnection.TenantId `
+        -ApplicationId $servicePrincipalConnection.ApplicationId `
+        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint
+    "Setting context to a specific subscription"  
+    Set-AzureRmContext -SubscriptionId $SubId             
+}
+catch {
+    if (!$servicePrincipalConnection) {
+        $ErrorMessage = "Connection $connectionName not found."
+        throw $ErrorMessage
+    }
+    else {
+        Write-Error -Message $_.Exception
+        throw $_.Exception
+    }
+}
+# If there is a specific resource group, then get all VMs in the resource group,
+# otherwise get all VMs in the subscription.
+if ($ResourceGroupName) { 
+    Write-Output "Resource Group specified: $($ResourceGroupName)"
+    $VMs = Get-AzureRmVM -ResourceGroupName $ResourceGroupName
+}
+else { 
+    Write-Output "No Resource Group specified"
+    $VMs = Get-AzureRmVM
+}
+
+foreach ($VM in $VMs) {
+    try {
+        Write-Output "Starting VM: $($VM.Name)"
+        $VM | Start-AzureRmVM -ErrorAction Stop
+        Write-Output ($VM.Name + " has been started")
+    }
+    catch {
+        Write-Output ($VM.Name + " failed to start")
+    }
+}
+
+
+Module 6
+student
+Password.111
+
+
+webhook url
+https://107fe2f6-3937-4b72-894a-5f23e7cc049f.webhook.sea.azure-automation.net/webhooks?token=Al%2bexCkHDEQlf%2fmqsolLtzww%2fthZWG09mr2%2be0p%2bjus%3d
+https://107fe2f6-3937-4b72-894a-5f23e7cc049f.webhook.sea.azure-automation.net/webhooks?token=Al%2bexCkHDEQlf%2fmqsolLtzww%2fthZWG09mr2%2be0p%2bjus%3d

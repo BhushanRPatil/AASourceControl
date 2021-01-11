@@ -1,5 +1,5 @@
 $resourceGroupName = "ContosoWebApp"
-$location = "southeastasia","westeurope","westus2" | Out-GridView -PassThru
+$location = "southeastasia"
 New-AzResourceGroup -Name $resourceGroupName -Location $location
 $storageAccount = New-AzStorageAccount -Name ($resourceGroupName.ToLower() + (Get-Random -Maximum 1000)) -ResourceGroupName $resourceGroupName -SkuName Standard_LRS -Location $location
 $context = (Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccount.StorageAccountName).Context

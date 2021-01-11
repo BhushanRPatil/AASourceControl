@@ -1,0 +1,10 @@
+$resourceGroupName = "ContosoWebApp"
+$location = "southeastasia","westeurope","westus2" | Out-GridView -PassThru
+New-AzResourceGroup -Name $resourceGroupName -Location $location
+$storageAccount = New-AzStorageAccount -Name ($resourceGroupName.ToLower() + (Get-Random -Maximum 1000)) -ResourceGroupName $resourceGroupName -SkuName Standard_LRS -Location $location
+$context = (Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccount.StorageAccountName).Context
+Set-Location C:\Labs\Module5
+New-AzStorageContainer -Name dbfiles -Permission Blob -Context $context
+Set-AzStorageBlobContent -File .\DBWebsite.zip -Container dbfiles -Blob DBWebsite.zip -Context $Context
+$key = New-AzStorageBlobSASToken -Container "dbfiles" -Blob "DBWebsite.zip" -Permission r -Context $context -FullUri -ExpiryTime (Get-Date).AddDays(30)
+$key | Clip
